@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,6 +88,25 @@ namespace OOP.Model
             }
         }
 
+        public void Ascend(int index)
+        {
+			Random rand = new Random();
+			int angelIndex = rand.Next(angelNames.Length - 1);
+			string randomAngel = angelNames[angelIndex];
+
+
+			if (index >= 0 && index < newPerson.Length && newPerson[index] != null)
+			{
+				String patientName = newPerson[index].getFullName;
+				for (int i = index; i < newPerson.Length - 1; i++)
+				{
+					newPerson[index] = newPerson[index + 1];
+				}
+
+				newPerson[index] = null;
+				MessageBox.Show($"{patientName} is ascended by Angel {randomAngel}", "Successfully Discharged", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
         public Person[] GetHospitalizedPatients()
         {
             return newPerson

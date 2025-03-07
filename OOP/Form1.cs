@@ -353,34 +353,70 @@ namespace OOP
 
         private void button7_Click_1(object sender, EventArgs e)
         {
-            if (confinedList.SelectedItems.Count > 0)
-            {
-                selectedIndex = confinedList.SelectedIndices[0]; // Get the selected index
-
-
-                if (selectedIndex >= 0 && selectedIndex < newPerson.Length && newPerson[selectedIndex] != null)
-                {
-                    // Show input dialog for temperature
-                    string input = Prompt.ShowDialog("Enter the name of the person authorized the discharge procedures", "Angel Name");
-
-                    if (!string.IsNullOrEmpty(input))
-                    {
-
-                        newDoc.DischargePatient(selectedIndex, input);
-                        populateConfinedList();  // Update the confined list
-                        Clear();
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please enter names", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select an item first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
         }
-    }
+
+		private void button8_Click(object sender, EventArgs e)
+		{
+			if (confinedList.SelectedItems.Count > 0)
+			{
+				selectedIndex = confinedList.SelectedIndices[0]; // Get the selected index
+
+
+				if (selectedIndex >= 0 && selectedIndex < newPerson.Length && newPerson[selectedIndex] != null)
+				{
+					// Show input dialog for temperature
+					string input = Prompt.ShowDialog("Enter the name of the person authorized the discharge procedures", "Angel Name");
+
+					if (!string.IsNullOrEmpty(input))
+					{
+
+						newDoc.DischargePatient(selectedIndex, input);
+						populateConfinedList();  // Update the confined list
+						Clear();
+
+					}
+					else
+					{
+						MessageBox.Show("Please enter names", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+				}
+			}
+			else
+			{
+				MessageBox.Show("Please select an item first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+
+		private void button9_Click(object sender, EventArgs e)
+		{
+            newDoc.Bless();
+		}
+
+		private void button10_Click(object sender, EventArgs e)
+		{
+            newDoc.Protect();
+		}
+
+		private void button11_Click(object sender, EventArgs e)
+		{
+			if (confinedList.SelectedItems.Count > 0)
+			{
+				selectedIndex = confinedList.SelectedIndices[0]; // Get the selected index
+
+
+				if (selectedIndex >= 0 && selectedIndex < newPerson.Length && newPerson[selectedIndex] != null)
+				{
+					// Show input dialog for temperature
+					newDoc.Ascend(selectedIndex);
+					populateConfinedList();  // Update the confined list
+					Clear();
+				}
+			}
+			else
+			{
+				MessageBox.Show("Please select an item first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+	}
 }
