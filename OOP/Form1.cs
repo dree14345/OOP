@@ -390,12 +390,12 @@ namespace OOP
 
 		private void button9_Click(object sender, EventArgs e)
 		{
-            newDoc.Bless();
+            newDoc.Guide();
 		}
 
 		private void button10_Click(object sender, EventArgs e)
 		{
-            newDoc.Protect();
+            newDoc.Empower();
 		}
 
 		private void button11_Click(object sender, EventArgs e)
@@ -408,7 +408,7 @@ namespace OOP
 				if (selectedIndex >= 0 && selectedIndex < newPerson.Length && newPerson[selectedIndex] != null)
 				{
 					// Show input dialog for temperature
-					newDoc.Ascend(selectedIndex);
+					newDoc.RescuePatient(selectedIndex);
 					populateConfinedList();  // Update the confined list
 					Clear();
 				}

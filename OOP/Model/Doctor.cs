@@ -113,6 +113,10 @@ namespace OOP.Model
             .Where(p => p != null && p.getIsHospitalized)  // Filter out null objects and hospitalized patients
             .ToArray();
         }
+        public void RescuePatient(int index)
+        {
+            Rescue(newPerson, index);  // Pass newPerson array to Angel's Rescue method
+        }
 
         public void SetWeight(int index, int weight, Person[] p)
         {

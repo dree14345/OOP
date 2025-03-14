@@ -30,32 +30,46 @@ namespace OOP.Model
             }
         }
 
-		public void Bless()
-		{
-			Random rand = new Random();
-			int index = rand.Next(angelNames.Length - 1);
-			string randomAngel = angelNames[index];
-			MessageBox.Show($"You have been blessed by: {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-		}
 
-		public void Protect()
+		public void Guide()
         {
             Random rand = new Random();
             int index = rand.Next(angelNames.Length - 1);
             string randomAngel = angelNames[index];
-			MessageBox.Show($"You have been protected by: {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
-		}
+            MessageBox.Show($"You have been guided by Angel {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-        public void Heal()
+        public void Empower()
         {
             Random rand = new Random();
             int index = rand.Next(angelNames.Length - 1);
             string randomAngel = angelNames[index];
-			MessageBox.Show($"You have been healed by: {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"You have been empowered by Angel {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-		}
+        }
+        public void Observe()
+        {
+            Random rand = new Random();
+            int index = rand.Next(angelNames.Length - 1);
+            string randomAngel = angelNames[index];
+            MessageBox.Show($"You have been observed by Angel {randomAngel}", "Blessed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
 
-        
+        public void Rescue(Person[] patients, int index)
+        {
+            if (index >= 0 && index < patients.Length && patients[index] != null)
+            {
+                Random rand = new Random();
+                int angelIndex = rand.Next(angelNames.Length);
+                string randomAngel = angelNames[angelIndex];
+
+                string patientName = patients[index].getFullName;
+                patients[index] = null; // Remove the patient
+
+                MessageBox.Show($"Patient {patientName} has been rescued by Angel {randomAngel}", "Rescued", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
     }
 }
