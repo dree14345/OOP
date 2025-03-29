@@ -23,6 +23,12 @@ namespace OOP.Model
             }
         }
 
+        public void SetHeartRate()
+        {
+            MessageBox.Show("Invalid Data. Please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+
         public void SetTemperature(int index, int temperature)
         {
             
@@ -32,6 +38,8 @@ namespace OOP.Model
                 newPerson[index].setTemperature = temperature;  // Update temperature
             }
         }
+
+
 
 
         public void HospitalizePatient(int index, Person[] p)
@@ -76,10 +84,6 @@ namespace OOP.Model
                 bool isDischarge = authorizeDischarge(authorization);
                 if (isDischarge)
                 {
-                    for (int i = index; i < newPerson.Length - 1; i++)
-                    {
-                        newPerson[index] = newPerson[index + 1];
-                    }
 
                     newPerson[index] = null;
                     MessageBox.Show($"{patientName} is now discharged by Angel {authorization}", "Successfully Discharged", MessageBoxButtons.OK, MessageBoxIcon.Information);

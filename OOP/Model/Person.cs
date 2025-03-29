@@ -12,7 +12,7 @@ namespace OOP.Model
 {
     public class Person
     {
-        private String FirstName, MiddleName, LastName, BloodType, HealthCondition;
+        private String FirstName, MiddleName, LastName, HealthCondition;
 
         private DateTime Birthdate;
         private int HeartRate, Temperature;
@@ -53,10 +53,6 @@ namespace OOP.Model
             get { return LastName; }
         }
 
-        public String getBloodType
-        {
-            get { return BloodType; }
-        }
 
         public int getHeartRate
         {

@@ -30,5 +30,36 @@ namespace OOP.Controls
 
             return prompt.ShowDialog() == DialogResult.OK ? txtInput.Text : string.Empty;
         }
+
+        public static int ShowNumberDialog(string text, string caption)
+        {
+            Form prompt = new Form()
+            {
+                Width = 400,
+                Height = 150,
+                Text = caption,
+                StartPosition = FormStartPosition.CenterScreen
+            };
+
+            Label lblText = new Label() { Left = 20, Top = 20, Text = text, Width = 340 };
+            TextBox txtInput = new TextBox() { Left = 20, Top = 50, Width = 340 };
+            Button btnOk = new Button() { Text = "OK", Left = 140, Width = 100, Top = 80, DialogResult = DialogResult.OK };
+
+            prompt.Controls.Add(lblText);
+            prompt.Controls.Add(txtInput);
+            prompt.Controls.Add(btnOk);
+            prompt.AcceptButton = btnOk;
+
+            DialogResult result = prompt.ShowDialog();
+
+            // Validate the input to be an integer
+            if (result == DialogResult.OK && int.TryParse(txtInput.Text, out int integerValue))
+            {
+                return integerValue;
+            }
+
+            // Return -1 if the input is not valid
+            return -1;
+        }
     }
 }

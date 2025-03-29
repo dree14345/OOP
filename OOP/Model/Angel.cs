@@ -18,13 +18,14 @@ namespace OOP.Model
          };
 
 
-		public Boolean authorizeDischarge(String name)
+        public Boolean authorizeDischarge(String name)
         {
             if (!String.IsNullOrEmpty(name))
             {
                 MessageBox.Show($"You are now discharged with authorization from Angel {name}", "Discharged Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
@@ -32,7 +33,7 @@ namespace OOP.Model
 
 
 
-		public void Guide()
+        public void Guide()
         {
             Random rand = new Random();
             int index = rand.Next(angelNames.Length - 1);

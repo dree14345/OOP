@@ -418,5 +418,34 @@ namespace OOP
 				MessageBox.Show("Please select an item first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
-	}
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+
+            if (confinedList.SelectedItems.Count > 0)
+            {
+                selectedIndex = confinedList.SelectedIndices[0]; // Get the selected index
+
+
+                if (selectedIndex >= 0 && selectedIndex < newPerson.Length && newPerson[selectedIndex] != null)
+                {
+                    var selectedPatient = confinedList.SelectedItems[0].Text; 
+                    int input = Prompt.ShowNumberDialog($"Enter the Heart Rate of Patient {selectedPatient}:", "Enter a number");
+
+                    if (input != -1)
+                    {
+                        newDoc.SetHeartRate(selectedIndex, input);
+                        populateConfinedList();
+                    } else
+                    {
+                        newDoc.SetHeartRate();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
 }
