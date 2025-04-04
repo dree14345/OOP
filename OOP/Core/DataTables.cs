@@ -43,6 +43,37 @@ namespace OOP.Core
                 return null; 
             }
         }
+        public static DataTable DoctorList(string searchTerm = "")
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                using (MySqlConnection conn = new MySqlConnection(ServerInstance.DbConnectionString))
+                {
+                    conn.Open();
+
+                    using (MySqlCommand storedProc = new MySqlCommand("GetDoctor", conn))
+                    {
+                        storedProc.CommandType = CommandType.StoredProcedure;
+
+                        storedProc.Parameters.AddWithValue("@search_term", searchTerm);
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(storedProc))
+                        {
+                            adapter.Fill(dt);
+                        }
+                    }
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
 
         public static DataTable AngelList(string searchTerm = "")
         {
@@ -55,6 +86,38 @@ namespace OOP.Core
                     conn.Open();
 
                     using (MySqlCommand storedProc = new MySqlCommand("GetAngelData", conn))
+                    {
+                        storedProc.CommandType = CommandType.StoredProcedure;
+
+                        storedProc.Parameters.AddWithValue("@search_term", searchTerm);
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(storedProc))
+                        {
+                            adapter.Fill(dt);
+                        }
+                    }
+                }
+
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
+
+        public static DataTable ActivePatientList(string searchTerm = "")
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+
+                using (MySqlConnection conn = new MySqlConnection(ServerInstance.DbConnectionString))
+                {
+                    conn.Open();
+
+                    using (MySqlCommand storedProc = new MySqlCommand("GetActivePatients", conn))
                     {
                         storedProc.CommandType = CommandType.StoredProcedure;
 

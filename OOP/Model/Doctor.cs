@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using OOP.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -129,5 +131,54 @@ namespace OOP.Model
                 newPerson[index].SetWeight = weight;
             }
         }
+
+
+        public void AdmitPatient(int personId, int doctorId, string diagnose, string notes)
+        {
+            using (var conn = new MySqlConnection(ServerInstance.DbConnectionString))
+            {
+                using (var cmd = new MySqlCommand("INSERT INTO patient_table(person_id, doctor_id, diagnose, note) VALUES(@person_id, @doctor_id, @diagnose, @note)", conn))
+                {
+                    cmd.Parameters.AddWithValue("@person_id", personId);
+                    cmd.Parameters.AddWithValue("@doctor_id", doctorId);
+                    cmd.Parameters.AddWithValue("@diagnose", diagnose);
+                    cmd.Parameters.AddWithValue("@note", notes);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DischargePatient(int autoid)
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(ServerInstance.DbConnectionString))
+                {
+                    using (var cmd = new MySqlCommand("UPDATE patient_table SET status = @status WHERE autoid = @id", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@status", "Discharged");
+                        cmd.Parameters.AddWithValue("@id", autoid);
+
+                        conn.Open();
+                        int affectedRows = cmd.ExecuteNonQuery();
+
+                        if (affectedRows == 0)
+                        {
+                            MessageBox.Show("No patient was found with the given ID.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        MessageBox.Show("Successfully Discharge the Patient", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error while discharging patient: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }
