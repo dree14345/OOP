@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using OOP.Properties;
 using MySql.Data.MySqlClient;
 using OOP.Core;
+using System.Net.NetworkInformation;
 
 namespace OOP
 {
@@ -38,26 +39,31 @@ namespace OOP
             }
         }
 
-        private void ConnectToDatabase(string server, string db, string port, string user, string pass)
+        private void ConnectToDatabase()
         {
-            // Validation Dictionary
-            var validationErrors = new Dictionary<MaterialTextBox2, string>
-            {
-                { TxtServer, "Server name is required" },
-                { TxtDb, "Database name is required" },
-                { TxtPort, "Port is required" },
-                { TxtUser, "Username is required" },
-            };
 
-            // Collect errors
             bool isValid = true;
-            foreach (var entry in validationErrors)
+
+
+
+            if (string.IsNullOrEmpty(TxtServer.Text))
             {
-                if (string.IsNullOrWhiteSpace(entry.Key.Text))
-                {
-                    entry.Key.ErrorMessage = entry.Value;
-                    isValid = false;
-                }
+                TxtServer.ErrorMessage = "Server name is required";
+                isValid = false;
+            } else if (string.IsNullOrEmpty(TxtDb.Text))
+            {
+                TxtDb.ErrorMessage = "Database name is required";
+                isValid = false;
+            }
+            else if (string.IsNullOrEmpty(TxtPort.Text))
+            {
+                TxtPort.ErrorMessage = "Port is required";
+                isValid = false;
+            }
+            else if (string.IsNullOrEmpty(TxtUser.Text))
+            {
+                TxtUser.ErrorMessage = "Username is required";
+                isValid = false;
             }
 
             if (!isValid)
@@ -66,46 +72,54 @@ namespace OOP
                 return;
             }
 
+
+            var ping = new Ping();
+            var pingReply = ping.Send(TxtServer.Text);
             // Save settings
-            Settings.Default.Server = server;
-            Settings.Default.DB = db;
-            Settings.Default.Port = port;
-            Settings.Default.User = user;
-            Settings.Default.Pass = pass;
-            Settings.Default.Save();
-
-            try
+            if (pingReply != null && pingReply.Status == IPStatus.Success)
             {
-                using (var con = new MySqlConnection(ServerInstance.DbConnectionString))
-                {
-                    con.Open();
-                    MessageBox.Show($"Successfully connected to the database {db}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Hide();
-                    MainForm form = new MainForm();
-                    form.ShowDialog();
+                Settings.Default.Server = TxtServer.Text;
+                Settings.Default.DB = TxtDb.Text;
+                Settings.Default.Port = TxtPort.Text;
+                Settings.Default.User = TxtUser.Text;
+                Settings.Default.Pass = TxtPass.Text;
+                Settings.Default.Save();
 
+                try
+                {
+                    using (var con = new MySqlConnection(ServerInstance.DbConnectionString))
+                    {
+                        con.Open();
+                        MessageBox.Show($"Successfully connected to the database {TxtDb.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Hide();
+                        MainForm form = new MainForm();
+                        form.ShowDialog();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Database connection failed!\nError: {ex.Message}", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Database connection failed!\nError: {ex.Message}", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
 
-        private void materialButton1_Click(object sender, EventArgs e)
+
+
+        private void materialButton1_Click_1(object sender, EventArgs e)
         {
-            ConnectToDatabase(TxtServer.Text, TxtDb.Text, TxtPort.Text, TxtUser.Text, TxtPass.Text);
+            ConnectToDatabase();
         }
 
-        private void materialButton2_Click(object sender, EventArgs e)
+        private void materialButton2_Click_1(object sender, EventArgs e)
         {
             TxtServer.Text = "localhost";
             TxtDb.Text = "oopdb";
             TxtPort.Text = "3306";
             TxtUser.Text = "root";
-            TxtPass.Text = "";
-            ConnectToDatabase(TxtServer.Text, TxtDb.Text, TxtPort.Text, TxtUser.Text, TxtPass.Text);
+            TxtPass.Text = "1234567";
+            ConnectToDatabase();
         }
     }
 }

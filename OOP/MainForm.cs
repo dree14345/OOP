@@ -122,7 +122,7 @@ namespace OOP
                     //}
 
                     ListViewItem item = new ListViewItem(row["autoid"].ToString());
-                    item.SubItems.Add(row["angel_name"].ToString());
+                    item.SubItems.Add(row["name"].ToString());
                     angelListView.Items.Add(item);
                 }
 
@@ -197,7 +197,7 @@ namespace OOP
 
                     if (isAngelEdit)
                     {
-                        query = "UPDATE angel_table SET name = @name WHERE id = @id";
+                        query = "UPDATE angel_table SET name = @name WHERE autoid = @id";
                     }
                     else
                     {
@@ -240,7 +240,7 @@ namespace OOP
 
         private void button8_Click(object sender, EventArgs e)
         {
-            selectedAngelId = Convert.ToInt32(personListView.SelectedItems[0].SubItems[0].Text);
+            selectedAngelId = Convert.ToInt32(angelListView.SelectedItems[0].SubItems[0].Text);
 
             var result = MessageBox.Show("Do you want to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
@@ -249,23 +249,27 @@ namespace OOP
                 {
                     using (var conn = new MySqlConnection(ServerInstance.DbConnectionString))
                     {
-                        using (var cmd = new MySqlCommand("DELETE FROM angel_table WHERE auto_id = @id"))
+                        conn.Open(); 
+
+                        using (var cmd = new MySqlCommand("DELETE FROM angel_table WHERE autoid = @id", conn))
                         {
                             cmd.Parameters.AddWithValue("@id", selectedAngelId);
-                            conn.Open();
                             cmd.ExecuteNonQuery();
                         }
                     }
 
-                    GetPersonData();
+                    GetAngelData();
                     MessageBox.Show("Item deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
             }
         }
+
+
         private void button5_Click_1(object sender, EventArgs e)
         {
             ClearAngelPage();
@@ -294,7 +298,7 @@ namespace OOP
                                 CommandType = CommandType.StoredProcedure,
                             })
                             {
-                                storedProc.Parameters.Add("@id", MySqlDbType.Int32).Value = selectedPersonId;
+                                storedProc.Parameters.Add("@_id", MySqlDbType.Int32).Value = selectedPersonId;
                                 conn.Open();
                                 storedProc.ExecuteNonQuery();
                             }
@@ -526,7 +530,7 @@ namespace OOP
         {
             if (doctorListView.SelectedItems.Count > 0)
             {
-                selectedPersonId = Convert.ToInt32(doctorListView.SelectedItems[0].SubItems[0].Text);
+                selectedDoctorId = Convert.ToInt32(doctorListView.SelectedItems[0].SubItems[0].Text);
 
                 var result = MessageBox.Show("Do you want to delete this item?", "Confirm Delete", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)

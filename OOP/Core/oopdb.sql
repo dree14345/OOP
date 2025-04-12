@@ -15,13 +15,16 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `oopdb`
 --
-CREATE DATABASE IF NOT EXISTS `oopdb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `oopdb`;
+CREATE DATABASE IF NOT EXISTS `oopdb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE oopdb;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 DELIMITER $$
 --
@@ -138,7 +141,7 @@ DROP TABLE IF EXISTS `angel_table`;
 CREATE TABLE `angel_table` (
   `autoid` int(11) NOT NULL,
   `name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -154,7 +157,7 @@ CREATE TABLE `doctor_table` (
   `lastn` text NOT NULL,
   `department` text NOT NULL,
   `specialization` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `doctor_table`
@@ -178,7 +181,7 @@ CREATE TABLE `patient_table` (
   `status` varchar(50) NOT NULL DEFAULT 'Admitted' COMMENT 'Admitted, Discharged, Deceased',
   `diagnose` text NOT NULL,
   `note` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `patient_table`
@@ -206,7 +209,7 @@ CREATE TABLE `person_table` (
   `middlen` varchar(50) NOT NULL,
   `lastn` varchar(50) NOT NULL,
   `heart_rate` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `person_table`
